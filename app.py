@@ -1,39 +1,12 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 import os
-import subprocess
 
 app = Flask(__name__)
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def home():
-
-    message = ""
-
-    if request.method == "POST":
-
-        video_url = request.form.get("video_url")
-
-        if video_url:
-
-            try:
-
-                subprocess.run(
-                    ["python", "main.py"],
-                    input=video_url,
-                    text=True,
-                    cwd=BASE_DIR
-                )
-
-                message = "Viral clips generated successfully!"
-
-            except Exception as e:
-                message = f"Error: {e}"
-
-    return render_template("index.html", message=message)
-
+    return render_template("index.html")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
