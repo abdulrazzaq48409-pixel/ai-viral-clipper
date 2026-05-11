@@ -1,10 +1,21 @@
-from flask import Flask, render_template
+from flask import Flask
+import os
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return """
+    <html>
+        <head>
+            <title>AI Viral Clipper</title>
+        </head>
+        <body>
+            <h1>AI Viral Clipper Working</h1>
+        </body>
+    </html>
+    """
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
